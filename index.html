@@ -150,7 +150,16 @@ Consultar
 
 function consultar(){
 
-document.getElementById("resultado").style.display="block";
+    let cedula = document.getElementById("cedula").value.trim();
+
+    if(cedula==""){
+        alert("Ingrese un número de documento.");
+        return;
+    }
+
+    window.open("Certificados/" + cedula + ".pdf","_blank");
+
+}
 
 }
 
