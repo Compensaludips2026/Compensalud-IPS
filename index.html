@@ -148,17 +148,18 @@ Consultar
 
 <script>
 
-function consultar(){
+function consultar() {
 
     let cedula = document.getElementById("cedula").value.trim();
 
-    if(cedula==""){
+    if (cedula === "") {
         alert("Ingrese un número de documento.");
         return;
     }
 
-    window.open("Certificados/" + cedula + ".pdf","_blank");
+    window.open("Certificados/" + cedula + ".pdf", "_blank");
 
+}
 }
 
 }
