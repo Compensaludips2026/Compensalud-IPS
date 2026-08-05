@@ -148,7 +148,8 @@ Consultar
 
 <script>
 
-function consultar() {
+<script>
+async function consultar() {
 
     let cedula = document.getElementById("cedula").value.trim();
 
@@ -157,12 +158,35 @@ function consultar() {
         return;
     }
 
-    window.open("Certificados/" + cedula + ".pdf", "_blank");
+    const url = "https://script.google.com/macros/s/AKfycbwLPkx2ospT72p-5AmJb5ISyJR0xdnChoMHlxTHvZTq7O4psBqCxJGdGHKd5pD4yD5m/exec?cedula=" + cedula;
 
-}
-}
+    try {
 
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+
+        if(datos.error){
+            alert("Documento no encontrado.");
+            return;
+        }
+
+        document.getElementById("resultado").style.display="block";
+
+        document.getElementById("resultado").innerHTML=`
+        <h3>Resultado de la consulta</h3>
+        <p><strong>Nombre:</strong> ${datos.nombre}</p>
+        <p><strong>Cédula:</strong> ${datos.documento}</p>
+        <p><strong>Empresa:</strong> ${datos.empresa}</p>
+        <p><strong>Fecha:</strong> ${datos.fecha}</p>
+        <p><strong>Tipo de examen:</strong> ${datos.examen}</p>
+        <p><strong>Estado:</strong> ${datos.estado}</p>
+        `;
+
+    } catch(e){
+        alert("Error al consultar la base de datos.");
+    }
 }
+</script>
 
 </script>
 
