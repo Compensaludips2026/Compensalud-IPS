@@ -117,52 +117,48 @@ Consultar
 </footer>
 
 <script>
+async function consultar() {
 
-async function consultar(){
+    const cedula = document.getElementById("cedula").value.trim();
 
-    let cedula = document.getElementById("cedula").value.trim();
-
-    if(cedula==""){
-        alert("Ingrese una cédula");
+    if (cedula === "") {
+        alert("Ingrese una cédula.");
         return;
     }
 
-    const url="TU_URL_DE_APPS_SCRIPT?cedula="+cedula;
+    const url = "https://script.google.com/macros/s/AKfycbwLPkx2ospT72p-5AmJb5ISyJR0xdnChoMHlxTHvZTq7O4psBqCxJGdGHKd5pD4yD5m/exec?cedula=" + cedula;
 
-    try{
+    try {
 
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
 
-        if(datos.error){
-            document.getElementById("resultado").style.display="block";
-            document.getElementById("resultado").innerHTML="<h3>Documento no encontrado.</h3>";
+        document.getElementById("resultado").style.display = "block";
+
+        if (datos.error) {
+            document.getElementById("resultado").innerHTML =
+            "<h3>Documento no encontrado.</h3>";
             return;
         }
 
-        document.getElementById("resultado").style.display="block";
-
-        document.getElementById("resultado").innerHTML=`
+        document.getElementById("resultado").innerHTML = `
             <h3>Resultado de la consulta</h3>
-
+            <p><strong>Documento:</strong> ${datos.documento}</p>
             <p><strong>Nombre:</strong> ${datos.nombre}</p>
-            <p><strong>Cédula:</strong> ${datos.documento}</p>
             <p><strong>Empresa:</strong> ${datos.empresa}</p>
+            <p><strong>Cargo:</strong> ${datos.cargo}</p>
             <p><strong>Fecha:</strong> ${datos.fecha}</p>
             <p><strong>Tipo de examen:</strong> ${datos.examen}</p>
             <p><strong>Estado:</strong> ${datos.estado}</p>
-            <p><strong>Cargo:</strong> ${datos.cargo}</p>
             <p><strong>Código de verificación:</strong> ${datos.codigo}</p>
         `;
 
-    }catch(error){
-
+    } catch (e) {
         alert("Error al consultar la base de datos.");
-
+        console.error(e);
     }
 
 }
-
 </script>
 
 </body>
